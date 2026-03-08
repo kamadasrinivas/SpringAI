@@ -9,7 +9,13 @@ import com.example.SpringAIWorkspace.service.AudioService;
 import com.example.SpringAIWorkspace.service.ChatService;
 import com.example.SpringAIWorkspace.service.ImageService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Spring AI", description = "Spring AI endpoints")
 public class AIController {
 	
 	@Autowired
@@ -21,9 +27,15 @@ public class AIController {
 	@Autowired
 	ImageService imageService;
 	
+	
+	@Operation(summary = "ask ai", description = "Returns ai response")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "AI responded"),
+        @ApiResponse(responseCode = "404", description = "AI has issues")
+    })
 	@GetMapping("/askai")
 	public String getResponse(@RequestParam String prompt) {
-		System.out.println("Hello");
+		System.out.println("prompt sent");
 		return chatService.getChatResponse(prompt);	
 		
 	}
